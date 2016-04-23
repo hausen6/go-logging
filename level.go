@@ -5,7 +5,7 @@ import "fmt"
 type LogLevel int
 
 const (
-	DEBUG LogLevel = 10 * (1 << (iota + 1))
+	DEBUG LogLevel = 10 * (iota + 1)
 	INFO
 	WARN
 	ERROR

@@ -7,19 +7,19 @@ import (
 
 func TestLogLevelDefine(t *testing.T) {
 	if DEBUG != 10 {
-		t.Errorf("DEBUG: %v", DEBUG)
+		t.Errorf("DEBUG: %d", DEBUG)
 	}
-	if INFO != 10 {
-		t.Errorf("INFO: %v", INFO)
+	if INFO != 20 {
+		t.Errorf("INFO: %d", INFO)
 	}
-	if WARN != 10 {
-		t.Errorf("WARN: %v", WARN)
+	if WARN != 30 {
+		t.Errorf("WARN: %d", WARN)
 	}
-	if ERROR != 10 {
-		t.Errorf("ERROR: %v", ERROR)
+	if ERROR != 40 {
+		t.Errorf("ERROR: %d", ERROR)
 	}
-	if FATAL != 10 {
-		t.Errorf("FATAL: %v", FATAL)
+	if FATAL != 50 {
+		t.Errorf("FATAL: %d", FATAL)
 	}
 }
 
