@@ -37,13 +37,33 @@ func TestBaseFormatter(t *testing.T) {
 func TestBaseHandler(t *testing.T) {
 	handler := &BaseHandler{
 		out:    os.Stderr,
-		level:  DEBUG,
+		level:  WARN,
 		format: NewBaseFormatter(),
 	}
 	handler.Output("__main__", INFO, "hello", "world")
+	handler.Output("__main__", WARN, "hello", "world")
 
 	// interfaceの実装確認
 	if _, ok := interface{}(handler).(Handler); !ok {
 		t.Errorf("BaseHandlerはHandlerとしてのinterfaceを満たしていません．")
 	}
+}
+
+func TestStreamHandler(t *testing.T) {
+	handler := NewStreamHandler()
+	handler.Output("__main__", INFO, "hello", "world")
+	handler.Output("__main__", WARN, "hello", "world")
+}
+
+func TestColorStreamHandler(t *testing.T) {
+	handler := NewColorStreamHandler()
+	handler.Output("__main__", INFO, "hello", "world")
+	handler.Output("__main__", WARN, "hello", "world")
+
+	handler.SetLevel(DEBUG)
+	handler.Output("__main__", DEBUG, "hello", "world")
+	handler.Output("__main__", INFO, "hello", "world")
+	handler.Output("__main__", WARN, "hello", "world")
+	handler.Output("__main__", ERROR, "hello", "world")
+	handler.Output("__main__", FATAL, "hello", "world")
 }
