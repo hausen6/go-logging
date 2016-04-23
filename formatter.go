@@ -24,18 +24,16 @@ type LogFormat struct {
 type Formatter interface {
 	SetFormat(string)
 	SetTimeFormat(string)
-	Parse(skip int, name string, level string, messages ...interface{})
+	Parse(io.Writer, int, string, LogLevel, ...interface{})
 }
 
 type BaseFormatter struct {
-	out        io.Writer
 	format     string
 	timeFormat string
 }
 
-func NewBaseFormatter(out io.Writer) *BaseFormatter {
+func NewBaseFormatter() *BaseFormatter {
 	formatter := new(BaseFormatter)
-	formatter.out = out
 	formatter.format = "[{{.Level}}] {{.Message}}"
 	formatter.timeFormat = "2006/01/02 03:04:05"
 
@@ -50,11 +48,11 @@ func (self *BaseFormatter) SetTimeFormat(format string) {
 	self.timeFormat = format
 }
 
-func (self *BaseFormatter) Parse(skip int, name string, level LogLevel, messages ...interface{}) {
+func (self *BaseFormatter) Parse(out io.Writer, skip int, name string, level LogLevel, messages ...interface{}) {
 	var err error
 	tmpl, err := template.New("logformat").Parse(self.format + "\n")
 	if err != nil {
-		log.Fatalf("incorrect Log Format was set. => %v\n", self.format)
+		log.Printf("incorrect Log Format has been set. => %v\n", self.format)
 	}
 
 	filename, shortfilename, lineno := getFileInfo(skip + 1)
@@ -72,7 +70,7 @@ func (self *BaseFormatter) Parse(skip int, name string, level LogLevel, messages
 		Message:       strings.Join(msg, ", "),
 	}
 
-	err = tmpl.Execute(self.out, format)
+	err = tmpl.Execute(out, format)
 	if err != nil {
 		log.Println(err)
 	}
