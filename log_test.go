@@ -41,4 +41,9 @@ func TestBaseHandler(t *testing.T) {
 		format: NewBaseFormatter(),
 	}
 	handler.Output("__main__", INFO, "hello", "world")
+
+	// interfaceの実装確認
+	if _, ok := interface{}(handler).(Handler); !ok {
+		t.Errorf("BaseHandlerはHandlerとしてのinterfaceを満たしていません．")
+	}
 }
