@@ -5,6 +5,24 @@ import (
 	"testing"
 )
 
+func TestLogLevelDefine(t *testing.T) {
+	if DEBUG != 10 {
+		t.Errorf("DEBUG: %v", DEBUG)
+	}
+	if INFO != 10 {
+		t.Errorf("INFO: %v", INFO)
+	}
+	if WARN != 10 {
+		t.Errorf("WARN: %v", WARN)
+	}
+	if ERROR != 10 {
+		t.Errorf("ERROR: %v", ERROR)
+	}
+	if FATAL != 10 {
+		t.Errorf("FATAL: %v", FATAL)
+	}
+}
+
 func TestBaseFormatter(t *testing.T) {
 	format := NewBaseFormatter()
 	format.SetFormat("[{{.Level}}]:{{.Time}}:{{.ShortFilename}}:{{.Filename}}:{{.Lineno}} {{.Message}} ({{.Name}})")

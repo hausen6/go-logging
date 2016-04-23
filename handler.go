@@ -23,5 +23,11 @@ func (b *BaseHandler) SetFormeter(formatter Formatter) {
 }
 
 func (b *BaseHandler) Output(name string, level LogLevel, messages ...interface{}) {
-	b.format.Parse(b.out, 2, name, level, messages...)
+	if level >= b.level {
+		b.format.Parse(b.out, 2, name, level, messages...)
+	}
+}
+
+type StreamHandler struct {
+	BaseHandler
 }
