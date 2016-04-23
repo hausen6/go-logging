@@ -2,6 +2,7 @@ package logging
 
 import (
 	"os"
+	"sync"
 	"testing"
 )
 
@@ -72,9 +73,18 @@ func TestLoggerTest(t *testing.T) {
 	logger := NewLogger("test")
 	logger.AddHandler(NewStreamHandler(), NewColorStreamHandler())
 	logger.SetLevel(DEBUG)
-	logger.Debug("this is", "debug")
-	logger.Info("this is", "info")
-	logger.Warn("this is", "warn")
-	logger.Error("this is", "error")
-	logger.Fatal("this is", "fatal")
+	group := new(sync.WaitGroup)
+	group.Add(2)
+	go func() {
+		logger.Debug("this is", "debug")
+		logger.Info("this is", "info")
+		group.Done()
+	}()
+	go func() {
+		logger.Warn("this is", "warn")
+		logger.Error("this is", "error")
+		logger.Fatal("this is", "fatal")
+		group.Done()
+	}()
+	group.Wait()
 }
