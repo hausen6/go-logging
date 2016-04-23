@@ -65,7 +65,7 @@ func NewColorStreamHandler() *ColorStreamHandler {
 	handler.info_color = color.New(color.FgCyan)
 	handler.warn_color = color.New(color.FgYellow)
 	handler.error_color = color.New(color.FgRed)
-	handler.fatal_color = color.New(color.FgBlack).Add(color.BgRed)
+	handler.fatal_color = color.New(color.FgWhite).Add(color.BgRed)
 
 	return handler
 }

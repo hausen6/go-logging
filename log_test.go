@@ -67,3 +67,14 @@ func TestColorStreamHandler(t *testing.T) {
 	handler.Output("__main__", ERROR, "hello", "world")
 	handler.Output("__main__", FATAL, "hello", "world")
 }
+
+func TestLoggerTest(t *testing.T) {
+	logger := NewLogger("test")
+	logger.AddHandler(NewStreamHandler(), NewColorStreamHandler())
+	logger.SetLevel(DEBUG)
+	logger.Debug("this is", "debug")
+	logger.Info("this is", "info")
+	logger.Warn("this is", "warn")
+	logger.Error("this is", "error")
+	logger.Fatal("this is", "fatal")
+}
